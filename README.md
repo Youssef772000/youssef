@@ -1,15 +1,54 @@
-# youssef
-self driving car by VHDL
-########################################### code
-########################################################################################### 
+
+## self driving car by VHDL
+
+##  Steps 
+1- The Car is in Initial State.
+
+2- Press the Start Drive Button to activate the Engine.
+
+3- Check that the Seat Belts are fastened and that the Doors are locked well for Safety. 
+
+4- Activate the Computer Screen and Salute the Riders. 
+
+5- The Rider enters the required Destination on GPS Navigator. 
+
+6- Activate the side, front and back Sensors. Activate the Camera on the top of the Car. 
+
+7- The car will move out of the parking spot using the AI to control its movement and calculate the safest way to get the car on the road.
+
+8- Start the Trip and follow the GPS. If the speed is from [0-40Km/h], then stay at the right Lane. If the Speed is from [40-70Km/h], then Activate the Left Car Rear Headlight for 5 seconds and then change to the Central Lane. If the Speed is above [70Km/h] then Activate the Left Car Rear Headlight for 5 seconds again and change to the Left Lane. 
+
+## Note :  The speed is determined according to the state of the Road.
+9- If the GPS gives that we need to turn right after a near distance, then Activate the right Car Rear Headlight for 5 seconds and then change to the Right Lane while slowing down till the car reach the right turn and then slide within the same Lane without leaving it.
+
+10- If the GPS gives that we need to turn Left after a near distance, then Activate the left Car Rear Headlight for 5 seconds and then change to the left Lane while slowing down till the car reach the left turn and then slide within the same Lane without leaving it.
+ 
+11- If the Camera recognized a traffic light, then it reads if the Lights Are Red or Yellow, then slow down and stop. If the Light is Green, then continue and pass the Traffic Light.
+ 
+ 12-The sensors and camera are active all the time so that if there is any hindrance in the way or the car in front stopped moving, the rear lights will be turned on and the car will decelerate and stop when the road is clear again the car will continue moving. (Hindrance like a passerby or an animal crossing the street) 
+ 
+13-When the destination is reached then drive to the location of nearest open parking space.
+ 
+14-Check if the parking space is for horizontal or vertical parking. Then park the car using the AI.
+
+15- Print DISTINATION REACHED on the screen and return to initial state
+
+
+
+## ASM chart for The Self Driving Car . 
+
+![image](https://user-images.githubusercontent.com/93544418/147891996-ba38b973-6d78-4b9a-9d36-c3d2014713d7.png)
+
+## VHDL code
+
+```
 library ieee;
+ 
 use ieee.std_logic_1164.all;
  
 entity selfdrivingcar is
     Port ( clk,rst,start,s1,cs1,cs2,s2,s3,Ai1,tr,s4,v40,hl,v70,hr,g,tu,right,dest : in STD_LOGIC;
- 
- 
-           sc,sen,ca,Ai,stop,rl,ll,v,cl,llight,rlight,gps,sd,e,traffic,cd,obst: out STD_LOGIC);
+       sc,sen,ca,Ai,stop,rl,ll,v,cl,llight,rlight,gps,sd,e,traffic,cd,obst: out STD_LOGIC);
 end selfdrivingcar;
  
 architecture Behavioral of selfdrivingcar is
@@ -157,9 +196,7 @@ begin
             nxt <= T22 ;
          when T20 => 
          ll<='0' ;
-         
-
-             rlight<='1' ;
+              rlight<='1' ;
             if (hr='1') then nxt<=T21 ;
             else nxt<=T20 ;
             end if; 
@@ -177,9 +214,9 @@ begin
              end if;
           when T23=>
           nxt<=T0 ;
- 
- 
-     end case;
+    end case;
      end process comb; 
+ 
+end Behavioral; 
 
-end Behavioral;
+```
